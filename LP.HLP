@@ -1,0 +1,44 @@
+                                Commands                                                                                                                       
+
+^C  delete the current column
+^D  redraw the screen
+^E  exit this program
+^H  add a column to the left of the current column
+^J  add a row below the current row
+^K  add a row above the current row
+^L  add a column above the current column
+^M  treat the matrix as a Markov chain (error is to the right)
+^R  delete the current row
+^Z  suspend this program
+ ?  print this message
+ C  copy a row or column
+ H  move to the left edge + 1
+ J  move to the bottom edge + 1
+ K  move to the top edge + 1
+ L  move to the right edge + 1
+ M  find the maximum Z under the system
+ P  print the session
+ Q  quit (exit the program)
+ R  restore a session saved to a file
+ S  save a session into a file
+
+ a,b,c,d,e,n,x,z   move to one of the following areas
+
+   for the system of equations Ax <= b minimize/maximize Z = cx
+         | x     |        a - the elements of A
+      ---------------     b - the elements of b
+       d | a | e | b      c - the elements of c
+      ---------------     d - a name for the constraint
+       z = c              e - <, =, or >
+Solution:  _              n
+           n              x - name field for the variable x
+                          z - name field for Z
+
+ g  go to a particular row and column
+ i  enter the value of the current field
+ h  move one column to the left
+ j  move down one row
+ k  move up one row
+ l  move one column to the right
+ m  find the minimum Z under the system
+ q  quit (exit the program)

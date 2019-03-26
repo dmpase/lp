@@ -1,0 +1,24 @@
+MSCS 591 Distributed Systems
+Final Exam
+August 10, 1998
+
+1.  Write a Java program that creates two threads, 0 and 1, and 
+    exits.  Each thread runs for 50 iterations.  Each iteration
+    prints its thread number then sleeps for 1000 milliseconds.
+
+2.  Create two classes, Address and SonOfAddress.  Address stores
+    a person's name, address and telephone number.  SonOfAddress
+    inherits from Address and adds a social security number.
+
+3.  Create a new class, WierdException, that stores a character
+    string and an integer value.  The string is returned as the
+    value of toString().  Write an additional function, throwWE,
+    that throws the exception WierdException for any reason you
+    choose.  Write a third function that calls throwWE and catches
+    the exception.
+
+4.  For Java variables, list the access modifiers and persistence
+    or storage class attributes.
+
+5.  Describe how the equivalent of C++ virtual functions are
+    provided in Java.
