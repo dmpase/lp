@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 1988, Douglas M. Pase                                         *
+ * Copyright (c) 1988,2019 Douglas M. Pase                                     *
  * All rights reserved.                                                        *
  * Redistribution and use in source and binary forms, with or without          *
  * modification, are permitted provided that the following conditions          *
@@ -45,15 +45,13 @@ void markhov_chain()
     if (rmax != cmax) {
 	errorw("Invalid Markov chain");
 	return;
-    } 
-    else {
+    } else {
 	ask("Generations?  ",ans);
 	gen = atoi(ans);
 	if (gen < 1) {
 	    if (ans[0] != '\0') {
 		errorw("Must be > 0");
-	    }
-	    else {
+	    } else {
 		errorw("");
 	    }
 	    return;

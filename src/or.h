@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 1988, Douglas M. Pase                                         *
+ * Copyright (c) 1988,2019 Douglas M. Pase                                     *
  * All rights reserved.                                                        *
  * Redistribution and use in source and binary forms, with or without          *
  * modification, are permitted provided that the following conditions          *
@@ -27,174 +27,19 @@
  * THE POSSIBILITY OF SUCH DAMAGE.                                             *
  *******************************************************************************/
 
-#ifndef MATRIX_H
-#define MATRIX_H
-
-typedef double matelt;
-
-struct m2d {		/* 2-d matrices, 1st elt is a(1,1) */
-	int i;		/* rows */
-	int j;		/* columns */
-	matelt *elts;	/* array elements */
-};
-
-#define m2d_NULL	(struct m2d *) 0
-
-/*
- * not_m2d: checks for a valid matrix.
- */
-
-extern int not_m2d();
-
-
-/*
- * new_m2d:  create a new matrix
- */
-
-extern struct m2d *new_m2d();
-
-
-/*
- * kill_m2d:  deallocate a matrix
- */
-
-extern void kill_m2d();
-
-
-/*
- * set_m2d:  initialize an element of an array.
- */
-
-extern void set_m2d();
-
-
-/*
- * get_m2d:  get an element from a 2d matrix.
- */
-
-
-extern matelt get_m2d();
-
-
-/*
- * add_m2d:  add two matrices and return the result.
- */
-
-extern struct m2d *add_m2d();
-
-
-/*
- * mult_m2d:  multiply two matrices and return the result.
- */
-
-extern struct m2d *mult_m2d();
-
-
-/*
- * prt_m2d:  print the matrix on the specified device.
- */
-
-extern void prt_m2d();
-
-
-/*
- * rd_m2d:  read values into a matrix.
- */
-
-extern void rd_m2d();
-
-
-/*
- * rdnew_m2d:  read values into a new matrix.
- */
-
-extern struct m2d *rdnew_m2d();
-
-
-/*
- * trans_m2d:  transpose a matrix.
- */
-
-extern struct m2d *trans_m2d();
-
-
-/*
- * id_m2d:  get an identity matrix.
- */
-
-extern struct m2d *id_m2d();
-
-
-/*
- * zero_m2d:  get a zero matrix.
- */
-
-extern struct m2d *zero_m2d();
-
-
-/*
- * row_m2d:  get a row from a matrix.
- */
-
-extern struct m2d *row_m2d();
-
-
-/*
- * col_m2d:  get a column from a matrix.
- */
-
-extern struct m2d *col_m2d();
-
-
-/*
- * scalar_m2d:  multiply a matrix by a scalar.
- */
-
-extern struct m2d *scalar_m2d();
-
-
-/*
- * submat_m2d:  get a sub-matrix from a matrix.
- */
-
-extern struct m2d *submat_m2d();
-
-
-/*
- * minor_m2d:  get a minor from a matrix.
- */
-
-extern struct m2d *minor_m2d();
-
-
-/*
- * det_m2d:  get a matrix determinant.
- */
-
-extern matelt det_m2d();
-
-
-/*
- * app_r_m2d:  append two matrices by row.
- */
-
-extern struct m2d *app_r_m2d();
-
-
-/*
- * app_c_m2d:  append two matrices by column.
- */
-
-extern struct m2d *app_c_m2d();
-
-
-/*
- * rho_m2d:  change a matrix from mxn to ixj.
- */
-
-extern struct m2d *rho_m2d();
-
-extern struct m2d *inv_m2d();
-
+#ifndef OR_H
+#define OR_H
+
+#include "matrix.h"
+
+#define NO_SOLN   0
+#define SOLUTION  1
+#define UNBOUNDED 2
+#define VALID     3
+#define INVALID   4
+
+int simplex_m2d();
+int pivot_col(struct m2d *c);
+int pivot_row(struct m2d* a, struct m2d* b, int col);
 
 #endif

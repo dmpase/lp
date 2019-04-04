@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 1988, Douglas M. Pase                                         *
+ * Copyright (c) 1988,2019 Douglas M. Pase                                     *
  * All rights reserved.                                                        *
  * Redistribution and use in source and binary forms, with or without          *
  * modification, are permitted provided that the following conditions          *
@@ -32,16 +32,14 @@
 #include "lp.h"
 #include "or.h"
 
-move_area(new)
-int new;
+void move_area(int new)
 {
     print_field(rcur, ccur, 0, area);	/* wipe out old highlight */
     area = new;
     print_field(rcur, ccur, 1, area);	/* highlight new area */
 }
 
-move_position(r,c)
-int r,c;
+void move_position(int r, int c)
 {
     if (r<1 || r>rmax || c<1 || c>cmax) {
 	errorw("End of screen");
@@ -59,8 +57,7 @@ int r,c;
 
 static int err_set = 1;
 
-errorw(s)
-char *s;
+void errorw(char *s)
 {
     err_set = strlen(s);
     move(LINES-1,1);
@@ -70,7 +67,7 @@ char *s;
     standend();
 }
 
-clear_errw()
+void clear_errw()
 {
     if (err_set) {
 	err_set = 0;
@@ -79,8 +76,7 @@ clear_errw()
     }
 }
 
-move_screen(r,c)
-int r,c;
+void move_screen(int r, int c)
 {
     int i,j;
 
@@ -89,8 +85,7 @@ int r,c;
     if (r < rscr) {			/* off the top */
 	if (r > rscr - rsmx) {		/* short jump */
 	    i = r;
-	}
-	else {				/* long jump */
+	} else {				/* long jump */
 	    i = r - rsmx/2;
 	    if (i<1) i = 1;
 	    if (i>rmax-rsmx) i = rmax-rsmx+1;
@@ -99,8 +94,7 @@ int r,c;
     else if (r > rscr + rsmx - 1) {	/* off the bottom */
 	if (r < rscr + 2*rsmx - 1) {	/* short jump */
 	    i = r - rsmx + 1;
-	}
-	else {				/* long jump */
+	} else {				/* long jump */
 	    i = r - rsmx/2;
 	    if (i<1) i = 1;
 	    if (i>rmax-rsmx) i = rmax-rsmx+1;
@@ -109,8 +103,7 @@ int r,c;
     if (c < cscr) {			/* off the left */
 	if (c > cscr - csmx) {		/* short jump */
 	    j = c;
-	}
-	else {				/* long jump */
+	} else {				/* long jump */
 	    j = c - csmx/2;
 	    if (j<1) j = 1;
 	    if (j>cmax-csmx) j = cmax-csmx+1;
@@ -119,8 +112,7 @@ int r,c;
     else if (c > cscr + csmx - 1) {	/* off the right */
 	if (c < cscr + 2*csmx - 1) {	/* short jump */
 	    j = c - csmx + 1;
-	}
-	else {				/* long jump */
+	} else {				/* long jump */
 	    j = c - csmx/2;
 	    if (j<1) j = 1;
 	    if (j>cmax-csmx) j = cmax-csmx+1;
@@ -135,7 +127,7 @@ int r,c;
     print_screen();
 }
 
-print_screen()
+void print_screen()
 {
     int i,j;
 
@@ -144,14 +136,12 @@ print_screen()
 	if (cur_soln == modified) {
 	    move(SLINE,2);
 	    printw("    Solution:");
-	}
-	else {
+	} else {
 	    move(SLINE,2);
 	    printw("Invalid soln:");
 	}
 	print_field(1,1,0,'Z');
-    }
-    else {
+    } else {
 	move(SLINE,2);
 	printw("             ");
 	move(SLINE, BCOL);
@@ -178,16 +168,16 @@ print_screen()
     }
 }
 
-go_to()
+void go_to()
 {
     int row, col;
 
-    if ((row=get_row("Row: ")) && (col=get_col("Column: ")))
+    if ((row=get_row("Row: ")) && (col=get_col("Column: "))) {
 	move_position(row,col);
+    }
 }
 
-int get_row(s)
-char *s;
+int get_row(char *s)
 {
     char ans[80];
     int i,row;
@@ -208,16 +198,14 @@ char *s;
 	    errorw("Row is out of bounds...");
 	    return(0);
 	}
-    }
-    else {
+    } else {
 	row = rcur;
     }
 
     return(row);
 }
 
-int get_col(s)
-char *s;
+void int get_col(char *s)
 {
     char ans[80];
     int i,col;
@@ -238,16 +226,14 @@ char *s;
 	    errorw("Column is out of bounds...");
 	    return(0);
 	}
-    }
-    else {
+    } else {
 	col = ccur;
     }
 
     return(col);
 }
 
-ask(p,s)
-char *p, *s;
+void ask(char *p, char *s)
 {
     int c, k, pl;
 
@@ -263,21 +249,18 @@ char *p, *s;
 	    k = k-1;
 	    if (k < 0) {
 		k = 0;
-	    }
-	    else {
+	    } else {
 		move(LINES-1,k+pl);
 		printw(" ");
 		move(LINES-1,k+pl);
 	    }
 	    c = 'a';
-	}
-	else if (c >= ' ') {
+	} else if (c >= ' ') {
 	    s[k] = c;
 	    move(LINES-1,k+pl);
 	    printw("%c",c);
 	    k += 1;
-	}
-	else if (c != '\r' && c != '\n') {
+	} else if (c != '\r' && c != '\n') {
 	    c = ' ';
 	}
 	refresh();
@@ -288,8 +271,7 @@ char *p, *s;
     refresh();
 }
 
-double ator(a)
-char *a;
+double ator(char *a)
 {
     double s;	/* the sign */
     double r;	/* the result */
@@ -298,32 +280,36 @@ char *a;
     if (*a == '-') {	/* get the sign */
 	s = -1.0;
 	a++;
-    }
-    else {
+    } else {
 	s = 1.0;
-	if (*a == '+')
+	if (*a == '+') {
 	    a++;
+	}
     }
     /*
      * Get the number up to the decimal point.
      */
     r = 0.0;
-    for ( ; '0' <= *a && *a <= '9'; a++)	/* get dd...d. */
+    for ( ; '0' <= *a && *a <= '9'; a++) {	/* get dd...d. */
 	r = r * 10.0 + *a - '0';
-    if (*a != '.')				/* only dd...d to get */
+    }
+    if (*a != '.') {				/* only dd...d to get */
 	return((float) s * r);
+    }
     /*
      * We now have the number up to the decimal.
      * Get the portion to the right of the decimal.
      */
-    for(a++, e = 0.1; '0' <= *a && *a <= '9'; a++, e *= 0.1)
+    for(a++, e = 0.1; '0' <= *a && *a <= '9'; a++, e *= 0.1) {
 	r += e * (*a - '0');
+    }
     r *= s;
     /*
      * Check for an exponent.
      */
-    if (*a != 'D' && *a != 'd' && *a != 'E' && *a != 'e')
+    if (*a != 'D' && *a != 'd' && *a != 'E' && *a != 'e') {
 	return((float) r);
+    }
     a++;
     /*
      * Get the sign of the exponent.
@@ -331,36 +317,39 @@ char *a;
     if (*a == '-') {
 	s = -1.0;
 	a++;
-    }
-    else {
+    } else {
 	s = 1.0;
-	if (*a == '+')
+	if (*a == '+') {
 	    a++;
+	}
     }
     /*
      * Get the magnitude of the exponent.
      */
     e = 0.0;
-    for ( ; '0' <= *a && *a <= '9'; a++)	/* have ddd.ddE- now get ee */
+    for ( ; '0' <= *a && *a <= '9'; a++) {	/* have ddd.ddE- now get ee */
 	e = e * 10.0 + *a - '0';
+    }
     /*
      * multiply result by 10^exponent
      */
-    for ( ; 0.5 < e; e -= 1.0)
-	if (s < 0.0)
+    for ( ; 0.5 < e; e -= 1.0) {
+	if (s < 0.0) {
 	    r *= 0.1;
-	else
+	} else {
 	    r *= 10.0;
+	}
+    }
     return((float) r);
 }
 
-print_row(row, h)
-int row,h;
+void print_row(int row, int h)
 {
     int j;
 
-    if (row < 1 || row > rmax || row < rscr || row > rscr+rsmx-1)
+    if (row < 1 || row > rmax || row < rscr || row > rscr+rsmx-1) {
 	return;
+    }
 
     print_field(row,cscr,h,'d');
     for (j=0; j < min(cmax,csmx); j++) {
@@ -370,30 +359,31 @@ int row,h;
     print_field(row,cscr,h,'b');
 }
 
-print_col(col, h)
-int col,h;
+void print_col(int col, int h)
 {
     int j;
 
-    if (col < 1 || col > cmax || col < cscr || col > cscr+csmx-1)
+    if (col < 1 || col > cmax || col < cscr || col > cscr+csmx-1) {
 	return;
+    }
 
     print_field(rscr,col,h,'x');
     for (j=0; j < min(rmax,rsmx); j++) {
 	print_field(rscr+j,col,h,'a');
     }
     print_field(rscr,col,h,'c');
-    if (cur_soln > -1)
+    if (cur_soln > -1) {
 	print_field(rscr,col,h,'s');
+    }
 }
 
-blank_row(row)
-int row;
+void blank_row(int row)
 {
     int j;
 
-    if (row < 1 || row < rscr || row > rscr+rsmx-1)
+    if (row < 1 || row < rscr || row > rscr+rsmx-1) {
 	return;
+    }
 
     move(ALINE+2*(row - rscr), DCOL);
     printw("             ");
@@ -407,13 +397,13 @@ int row;
     printw("         ");
 }
 
-blank_col(col)
-int col;
+void blank_col(int col)
 {
     int j;
 
-    if (col < 1 || col < cscr || col > cscr+csmx-1)
+    if (col < 1 || col < cscr || col > cscr+csmx-1) {
 	return;
+    }
 
     move(XLINE, ACOL+10*(col - cscr));
     printw("         ");
